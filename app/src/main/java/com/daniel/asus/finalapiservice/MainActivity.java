@@ -1,10 +1,14 @@
 package com.daniel.asus.finalapiservice;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 
 
 import com.daniel.asus.finalapiservice.finalapi.ApiService;
@@ -22,9 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
-    private static final String TAG = "POKEDEX";
+    private static final String TAG = "AUTO";
     private RecyclerView recyclerView;
-    private int offset;
     private boolean aptoParaCargar;
     private ListaAutoAdapter listaAutoAdapter;
 
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.i(TAG, " Llegamos al final.");
 
                             aptoParaCargar = false;
-                            offset += 20;
                             obtenerLista();
                         }
                     }
@@ -67,8 +69,21 @@ public class MainActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         aptoParaCargar = true;
-        offset = 0;
         obtenerLista();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.opciones, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==R.id.uno) {
+            Intent i = new Intent(this, Main2Activity.class );
+            startActivity(i);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void obtenerLista() {
@@ -96,4 +111,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
